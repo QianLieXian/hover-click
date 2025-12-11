@@ -1,0 +1,267 @@
+#dwell-control-panel {
+  all: initial;
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 2147483646 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif !important;
+  color: #333 !important;
+  user-select: none !important;
+  pointer-events: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transition: opacity 150ms ease;
+}
+
+#dwell-control-panel.panel-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#dwell-control-panel.panel-hidden .panel-shell {
+  pointer-events: none;
+}
+
+#dwell-control-panel .panel-shell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+#dwell-control-panel.drawer-left .panel-shell {
+  flex-direction: row-reverse;
+}
+
+#dwell-control-panel.drawer-right .panel-shell {
+  flex-direction: row;
+}
+
+#dwell-control-panel .panel-handle {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 120ms ease;
+  position: relative;
+  pointer-events: auto;
+}
+
+#dwell-control-panel .panel-handle:hover {
+  border-color: #999;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+#dwell-control-panel.dragging .panel-handle {
+  cursor: grabbing;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+#dwell-control-panel .panel-handle .handle-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  margin-bottom: 2px;
+}
+
+#dwell-control-panel .panel-handle .handle-label {
+  font-size: 9px;
+  color: #666;
+  font-weight: 500;
+}
+
+#dwell-control-panel.paused .panel-handle {
+  background: #fffbeb;
+  border-color: #fbbf24;
+}
+
+#dwell-control-panel.paused .panel-handle .handle-dot {
+  background: #f59e0b;
+}
+
+#dwell-control-panel.paused .panel-handle .handle-label {
+  color: #92400e;
+}
+
+#dwell-control-panel.collapsed .panel-handle {
+  opacity: 0.85;
+}
+
+#dwell-control-panel.expanded .panel-handle {
+  opacity: 1;
+  border-color: #999;
+}
+
+#dwell-control-panel .quick-actions {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: opacity 120ms ease;
+  pointer-events: auto;
+}
+
+#dwell-control-panel.collapsed .quick-actions {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#dwell-control-panel.expanded .quick-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#dwell-control-panel.panel-hidden .quick-actions {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.quick-action {
+  min-width: 48px;
+  height: 48px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 100ms ease;
+}
+
+.quick-action .icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.quick-action .label {
+  font-size: 10px;
+  color: #666;
+}
+
+.quick-action[data-dwell-action="closeTab"] .icon {
+  color: #ef4444;
+}
+
+.quick-action:hover {
+  background: #f5f5f5;
+}
+
+.quick-action:active {
+  background: #e5e5e5;
+}
+
+.quick-action.triggered {
+  background: #22c55e;
+  color: #fff;
+}
+
+.quick-action.triggered .label {
+  color: #fff;
+}
+
+#dwell-progress-indicator {
+  all: initial;
+  position: fixed !important;
+  width: 32px !important;
+  height: 32px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  transform: translate(-50%, -50%) !important;
+  transition: opacity 100ms ease !important;
+  z-index: 2147483647 !important;
+  border-radius: 50% !important;
+  border: 2px solid #ddd !important;
+  background: #fff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+#dwell-progress-indicator.visible {
+  opacity: 1;
+}
+
+@property --angle {
+  syntax: <angle>;
+  inherits: false;
+  initial-value: 0deg;
+}
+
+#dwell-progress-indicator::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(#22c55e var(--angle), transparent var(--angle));
+  mask: radial-gradient(circle, transparent 60%, #000 62%);
+  opacity: 0;
+}
+
+#dwell-progress-indicator.visible::after {
+  opacity: 1;
+}
+
+#dwell-progress-indicator.counting::after {
+  animation: dwell-arc var(--dwell-duration, 5s) linear forwards;
+}
+
+@keyframes dwell-arc {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
+}
+
+.dwell-click-pulse {
+  all: initial;
+  position: fixed !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  border: 2px solid #22c55e !important;
+  background: transparent !important;
+  pointer-events: none !important;
+  z-index: 2147483646 !important;
+  transform: translate(-50%, -50%) !important;
+  animation: dwell-pulse 0.4s ease-out forwards !important;
+}
+
+@keyframes dwell-pulse {
+  from {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #dwell-control-panel .quick-actions,
+  #dwell-progress-indicator,
+  .dwell-click-pulse,
+  .quick-action {
+    transition: none !important;
+    animation: none !important;
+  }
+}

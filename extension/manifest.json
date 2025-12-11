@@ -1,0 +1,24 @@
+﻿{
+  "manifest_version": 3,
+  "name": "Dwell Control Assistant",
+  "description": "Auto-click by mouse dwell and floating control pad for fullscreen gaming setups.",
+  "version": "0.1.0",
+  "permissions": ["tabs", "activeTab", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "Dwell Control Assistant",
+    "default_popup": "popup.html"
+  }
+}
+

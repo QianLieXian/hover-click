@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dwell Control Assistant</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup">
+      <header class="popup__header">
+        <h1>快捷设置</h1>
+        <span id="status-pill" class="status-pill">--</span>
+      </header>
+
+      <section class="card">
+        <label class="switch-row">
+          <input type="checkbox" id="toggle-enabled" />
+          <span>
+            <strong>功能总开关</strong>
+            <small>关闭后不会触发自动点击，悬浮球会显示"已暂停"</small>
+          </span>
+        </label>
+        <label class="switch-row">
+          <input type="checkbox" id="toggle-panel" />
+          <span>
+            <strong>显示悬浮球/快捷抽屉</strong>
+            <small>关闭后自动点击仍生效，只是隐藏快捷面板。</small>
+          </span>
+        </label>
+        <button id="quick-toggle" class="ghost-btn" type="button">关闭插件</button>
+      </section>
+
+      <section class="card">
+        <div class="field">
+          <label for="delay-input">点击延迟（毫秒）</label>
+          <div class="delay-control">
+            <input type="range" id="delay-slider" min="2000" max="10000" step="250" />
+            <div class="delay-input-wrap">
+              <input type="number" id="delay-input" min="2000" max="10000" step="250" />
+              <span>ms</span>
+            </div>
+          </div>
+          <p class="hint">根据自己的操作速度调节，最小 250ms，修改后立即生效。</p>
+        </div>
+      </section>
+
+      <section class="card card--muted">
+        <div class="inline">
+          <button id="reset-defaults" type="button">恢复默认设置</button>
+          <span class="autosave">修改将自动保存</span>
+        </div>
+      </section>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
